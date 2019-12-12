@@ -2,35 +2,7 @@ package me.stev.algorithms.robust;
 
 public class RobustSignalStatistics {
 
-    private double[] sigSrcArr;
-    private int blockSize;
-
-    public RobustSignalStatistics() {
-
-    }
-
-    public RobustSignalStatistics(double[] sigSrcArr, int blockSize) {
-        this.sigSrcArr = sigSrcArr;
-        this.blockSize = blockSize;
-    }
-
-    public double[] getSigSrcArr() {
-        return sigSrcArr;
-    }
-
-    public void setSigSrcArr(double[] sigSrcArr) {
-        this.sigSrcArr = sigSrcArr;
-    }
-
-    public int getBlockSize() {
-        return blockSize;
-    }
-
-    public void setBlockSize(int blockSize) {
-        this.blockSize = blockSize;
-    }
-
-    public double calcSigMean() {
+    public static double calcSigMean(double[] sigSrcArr, int blockSize) {
 
         double mean = 0.0;
         double sum = 0.0;
@@ -67,5 +39,9 @@ public class RobustSignalStatistics {
 
         mean = sum / (double) blockSize;
         return mean;
+    }
+
+    public double calcSigVariance(double[] sigSrcArr, int blockSize) {
+
     }
 }

@@ -2,35 +2,7 @@ package me.stev.algorithms.simple;
 
 public class SignalStatistics {
 
-    private double[] sigSrcArr;
-    private int sigLength;
-
-    public SignalStatistics() {
-
-    }
-
-    public SignalStatistics(double[] sigSrcArr, int sigLength) {
-        this.sigSrcArr = sigSrcArr;
-        this.sigLength = sigLength;
-    }
-
-    public double[] getSigSrcArr() {
-        return sigSrcArr;
-    }
-
-    public void setSigSrcArr(double[] sigSrcArr) {
-        this.sigSrcArr = sigSrcArr;
-    }
-
-    public int getSigLength() {
-        return sigLength;
-    }
-
-    public void setSigLength(int sigLength) {
-        this.sigLength = sigLength;
-    }
-
-    public double calcSigMean() {
+    public static double calcSigMean(double[] sigSrcArr, int sigLength) {
         double mean = 0.0;
         for (int i = 0; i < sigLength; i++) {
             mean += sigSrcArr[i];
@@ -38,8 +10,8 @@ public class SignalStatistics {
         return mean/(double) sigLength;
     }
 
-    public double calcSigVariance() {
-        double sigMean = calcSigMean();
+    public static double calcSigVariance(double[] sigSrcArr, int sigLength) {
+        double sigMean = calcSigMean(sigSrcArr, sigLength);
         double variance = 0.0;
         for (int i = 0; i < sigLength; i++) {
             variance += Math.pow((sigSrcArr[i] - sigMean), 2);
@@ -47,8 +19,8 @@ public class SignalStatistics {
         return variance / (double) (sigLength - 1);
     }
 
-    public double calcSigStd() {
-        double signalVariance = calcSigVariance();
+    public static double calcSigStd(double[] sigSrcArr, int sigLength) {
+        double signalVariance = calcSigVariance(sigSrcArr, sigLength);
         return Math.sqrt(signalVariance);
     }
 }
