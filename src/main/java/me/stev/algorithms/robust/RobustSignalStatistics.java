@@ -43,5 +43,24 @@ public class RobustSignalStatistics {
 
     public double calcSigVariance(double[] sigSrcArr, int blockSize) {
 
+        double variance = 0.0;
+        double sum = 0.0;
+        int blkCnt;
+        int idx = 0;
+
+        double fMean, fValue;
+        double fSum = 0.0;
+        double in1,in2,in3,in4;
+
+        if (blockSize <= 1)
+            variance = 0;
+
+        blkCnt = blockSize >> 2;
+
+        while (blkCnt > 0) {
+            
+        }
+
+        return variance;
     }
 }
