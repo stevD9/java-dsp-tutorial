@@ -1,4 +1,4 @@
-package me.stev.algorithms;
+package me.stev.algorithms.simple;
 
 public class SignalStatistics {
 

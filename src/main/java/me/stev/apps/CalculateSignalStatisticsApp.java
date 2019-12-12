@@ -1,6 +1,6 @@
 package me.stev.apps;
 
-import me.stev.algorithms.SignalStatistics;
+import me.stev.algorithms.simple.SignalStatistics;
 import me.stev.signals.Signal;
 
 public class CalculateSignalStatisticsApp {
