@@ -175,4 +175,168 @@ public class RobustSignalStatistics {
 
         return std;
     }
+
+    public static double calcSigRms(double[] sigSrcArr, int blockSize) {
+
+        double rms;
+        double sum = 0.0;
+        int blkCnt;
+        int idx = 0;
+        double in;
+
+        blkCnt = blockSize >> 2;
+
+        while (blkCnt > 0) {
+
+            in = sigSrcArr[idx++];
+            sum += in * in;
+
+            in = sigSrcArr[idx++];
+            sum += in * in;
+
+            in = sigSrcArr[idx++];
+            sum += in * in;
+
+            in = sigSrcArr[idx++];
+            sum += in * in;
+
+            blkCnt--;
+
+        }
+
+        blkCnt = blockSize % 0x4;
+
+        while (blkCnt > 0) {
+
+            in = sigSrcArr[idx++];
+            sum += in * in;
+
+            blkCnt--;
+        }
+
+        rms = Math.sqrt(sum / (double) blockSize);
+
+        return rms;
+    }
+
+    public static void calcSigMax(double[] sigSrcArr, int blockSize, double[] destArray) {
+
+        double maxValue1, maxValue2, out;
+        double blkCnt, outIndex;
+        double count = 0.0;
+        int idx = 0;
+
+        outIndex = 0.0;
+
+        out = sigSrcArr[idx++];
+
+        blkCnt = (blockSize - 1) >> 2;
+
+        while (blkCnt > 0) {
+
+            maxValue1 = sigSrcArr[idx++];
+            maxValue2 = sigSrcArr[idx++];
+
+            if (out < maxValue1) {
+                out = maxValue1;
+                outIndex = count + 1;
+            }
+
+            if (out < maxValue2) {
+                out = maxValue2;
+                outIndex = count + 2;
+            }
+
+            maxValue1 = sigSrcArr[idx++];
+            maxValue2 = sigSrcArr[idx++];
+
+            if (out < maxValue1) {
+                out = maxValue1;
+                outIndex = count + 3;
+            }
+
+            if (out < maxValue2) {
+                out = maxValue2;
+                outIndex = count + 4;
+            }
+
+            count += 4;
+            blkCnt--;
+        }
+
+        blkCnt = (blockSize - 1) % 0x4;
+        while (blkCnt > 0) {
+
+            maxValue1 = sigSrcArr[idx++];
+
+            if (out < maxValue1) {
+                out = maxValue1;
+                outIndex = blockSize - blkCnt;
+            }
+
+            blkCnt--;
+        }
+
+        destArray[0] = out;
+        destArray[1] = outIndex;
+    }
+
+    public static void calcSigMin(double[] sigSrcArr, int blockSize, double[] destArray) {
+
+        double minValue1, minValue2, out;
+        int blkCnt, outIndex, count;
+        int idx = 0;
+        count = 0;
+        outIndex = 0;
+        out = sigSrcArr[idx++];
+
+        blkCnt = (blockSize - 1) >> 2;
+
+        while (blkCnt > 0) {
+
+            minValue1 = sigSrcArr[idx++];
+            minValue2 = sigSrcArr[idx++];
+
+            if (out > minValue1) {
+                out = minValue1;
+                outIndex = count + 1;
+            }
+
+            if (out > minValue2) {
+                out = minValue2;
+                outIndex = count + 2;
+            }
+
+            minValue1 = sigSrcArr[idx++];
+            minValue2 = sigSrcArr[idx++];
+
+            if (out > minValue1) {
+                out = minValue1;
+                outIndex = count + 3;
+            }
+
+            if (out > minValue2) {
+                out = minValue2;
+                outIndex = count + 4;
+            }
+
+            count += count + 4;
+            blkCnt--;
+        }
+
+        blkCnt = (blockSize - 1) % 0x4;
+        while (blkCnt > 0) {
+
+            minValue1 = sigSrcArr[idx++];
+            if (out > minValue1) {
+                out = minValue1;
+                outIndex = blockSize - blkCnt;
+            }
+
+            blkCnt--;
+        }
+
+        destArray[0] = out;
+        destArray[1] = outIndex;
+    }
 }
