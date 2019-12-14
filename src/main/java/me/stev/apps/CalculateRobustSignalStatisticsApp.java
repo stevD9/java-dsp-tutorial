@@ -9,7 +9,9 @@ public class CalculateRobustSignalStatisticsApp {
 
         double mean = RobustSignalStatistics.calcSigMean(Signal.InputSignal_f32_1kHz_15kHz, Signal.InputSignal_f32_1kHz_15kHz.length);
         double variance = RobustSignalStatistics.calcSigVariance(Signal.InputSignal_f32_1kHz_15kHz, Signal.InputSignal_f32_1kHz_15kHz.length);
+        double std = RobustSignalStatistics.calcSigStd(Signal.InputSignal_f32_1kHz_15kHz, Signal.InputSignal_f32_1kHz_15kHz.length);
         System.out.println("The mean is : " + mean);
         System.out.println("The variance is : " + variance);
+        System.out.println("The standard deviation is : " + std);
     }
 }

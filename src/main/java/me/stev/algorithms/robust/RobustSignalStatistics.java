@@ -43,7 +43,7 @@ public class RobustSignalStatistics {
 
     public static double calcSigVariance(double[] sigSrcArr, int blockSize) {
 
-        double variance = 0.0;
+        double variance;
         double sum = 0.0;
         int blkCnt;
         int idx = 0;
@@ -52,8 +52,10 @@ public class RobustSignalStatistics {
         double fSum = 0.0;
         double in1,in2,in3,in4;
 
-        if (blockSize <= 1)
-            variance = 0;
+        if (blockSize <= 1) {
+            variance = 0.0;
+            return variance;
+        }
 
         blkCnt = blockSize >> 2;
 
@@ -113,5 +115,64 @@ public class RobustSignalStatistics {
         variance = fSum / (double) (blockSize - 1);
 
         return variance;
+    }
+
+    public static double calcSigStd(double[] sigSrcArr, int blockSize) {
+
+        double std;
+        double sum = 0.0;
+        int blkCnt;
+        int idx = 0;
+
+        double sumOfSquares = 0.0;
+        double in;
+        double squareOfSum;
+        double var;
+
+        if (blockSize <= 1) {
+            std = 0.0;
+            return std;
+        }
+
+
+        blkCnt = blockSize >> 2;
+
+        while (blkCnt > 0) {
+
+            in = sigSrcArr[idx++];
+            sum += in;
+            sumOfSquares += in * in;
+
+            in = sigSrcArr[idx++];
+            sum += in;
+            sumOfSquares += in * in;
+
+            in = sigSrcArr[idx++];
+            sum += in;
+            sumOfSquares += in * in;
+
+            in = sigSrcArr[idx++];
+            sum += in;
+            sumOfSquares += in * in;
+
+            blkCnt--;
+        }
+
+        blkCnt = blockSize % 0x4;
+
+        while (blkCnt > 0) {
+
+            in = sigSrcArr[idx++];
+            sum += in;
+            sumOfSquares += in * in;
+
+            blkCnt--;
+        }
+
+        squareOfSum = (sum * sum) / (double) (blockSize);
+        var = (sumOfSquares - squareOfSum) / (blockSize - 1.0);
+        std = Math.sqrt(var);
+
+        return std;
     }
 }
