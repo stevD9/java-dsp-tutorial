@@ -8,6 +8,8 @@ public class CalculateRobustSignalStatisticsApp {
     public static void main(String[] args) {
 
         double mean = RobustSignalStatistics.calcSigMean(Signal.InputSignal_f32_1kHz_15kHz, Signal.InputSignal_f32_1kHz_15kHz.length);
+        double variance = RobustSignalStatistics.calcSigVariance(Signal.InputSignal_f32_1kHz_15kHz, Signal.InputSignal_f32_1kHz_15kHz.length);
         System.out.println("The mean is : " + mean);
+        System.out.println("The variance is : " + variance);
     }
 }
